@@ -15,4 +15,8 @@ window.onload = function () {
       document.body.innerHTML += "<br /><span>" + e.data + "</span>";
     });
   });
+
+  source.addEventListener('ping', function (e) {
+    document.body.innerHTML += "<br /><span>New ping: " + new Date()  + "</span>";
+  });
 };

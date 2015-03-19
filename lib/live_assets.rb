@@ -27,6 +27,15 @@ module LiveAssets
       listener.start
     end
   end
+
+  def self.start_timer(event, time)
+    Thread.new do
+      while true
+        subscribers.each { |s| s << event }
+        sleep(time)
+      end
+    end
+  end
 end
 
 module LiveAssets
