@@ -14,4 +14,6 @@
  *= require_self
  */
 
-body { color: red };
+body {
+  color: blue;
+};
