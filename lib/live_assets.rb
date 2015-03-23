@@ -5,13 +5,18 @@ require "listen"
 module LiveAssets
   mattr_reader :subscribers
   @@subscribers = []
+  @@mutex = Mutex.new
 
   def self.subscribe(subscriber)
-    subscribers << subscriber
+    @@mutex.synchronize do
+      subscribers << subscriber
+    end
   end
 
   def self.unsubscribe(subscriber)
-    subscribers.delete(subscriber)
+    @@mutex.synchronize do
+      subscribers.delete(subscriber)
+    end
   end
 
   def self.start_listener(event, directories)
@@ -39,5 +44,9 @@ module LiveAssets
 end
 
 module LiveAssets
-  autoload :SSESubscriber, "live_assets/sse_subscriber"
+  extend ActiveSupport::Autoload
+
+  eager_autoload do
+    autoload :SSESubscriber
+  end
 end

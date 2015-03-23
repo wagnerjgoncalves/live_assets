@@ -1,5 +1,7 @@
 module LiveAssets
   class Engine < ::Rails::Engine
+    config.eager_load_namespaces << LiveAssets
+
     initializer "live_assets.start_listener" do |app|
       paths = app.paths["app/assets"].existent +
         app.paths["lib/assets"].existent +
